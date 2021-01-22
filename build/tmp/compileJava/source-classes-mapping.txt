@@ -2,3 +2,5 @@ com/youngwoo/teamtwo/Application.java
  com.youngwoo.teamtwo.Application
 com/youngwoo/teamtwo/MariaController.java
  com.youngwoo.teamtwo.MariaController
+com/youngwoo/teamtwo/testController.java
+ com.youngwoo.teamtwo.testController
