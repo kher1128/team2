@@ -8,13 +8,16 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MariaController {
     @RequestMapping(value = "/getData", method= RequestMethod.GET)
     @ResponseBody() // JSON
-    public String home(@RequestParam(value="company_id") String company_id) {
+    public Map  home(@RequestParam(value="company_id", required=false) String company_id) {
+        Map result = new HashMap<String, Object>();
         String ret = "";
         try (Connection conn = DriverManager.getConnection("jdbc:mariadb://team2.cqwr50ybrtaw.ap-northeast-2.rds.amazonaws.com/", "team2", "team2!!!!")) {
             // create a Statement
@@ -35,6 +38,7 @@ public class MariaController {
                         String ret1 = rs2.getString(1);
                         String ret2 = rs2.getString(2);
                         ret += ret1 + " " + ret2 + "\n";
+                        result.put(ret1, ret2);
                     }
                 } catch(Exception e){
                     System.out.println(e);
@@ -45,6 +49,6 @@ public class MariaController {
         } catch(Exception e){
             System.out.println(e);
         }
-        return ret;
+        return result;
     }
 }
