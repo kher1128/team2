@@ -18,7 +18,6 @@ public class MariaController {
     @ResponseBody() // JSON
     public Map  home(@RequestParam(value="company_id", required=false) String company_id) {
         Map result = new HashMap<String, Object>();
-        String ret = "";
         try (Connection conn = DriverManager.getConnection("jdbc:mariadb://team2.cqwr50ybrtaw.ap-northeast-2.rds.amazonaws.com/", "team2", "team2!!!!")) {
             // create a Statement
             try (Statement stmt = conn.createStatement()) {
@@ -31,13 +30,12 @@ public class MariaController {
 //                        System.out.println(sang2);
 //                    }
 
-                    String SQL = "select * from company_price_info where company_id = \'"  + company_id + "\'";
+                    String SQL = "select * from company_info where company_id = \'"  + company_id + "\'";
                     ResultSet rs2 = stmt.executeQuery(SQL); // 삼성전자 가격 조회
 //                    ResultSet rs2 = stmt.executeQuery("SHOW COLUMNS FROM company_price_info;"); // 테이블 컬럼 조회
                     while(rs2.next()){
                         String ret1 = rs2.getString(1);
                         String ret2 = rs2.getString(2);
-                        ret += ret1 + " " + ret2 + "\n";
                         result.put(ret1, ret2);
                     }
                 } catch(Exception e){
@@ -51,4 +49,36 @@ public class MariaController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/problem/kosdaq", method= RequestMethod.GET)
+    @ResponseBody() // JSON
+    public Map kosdaq_problem() {
+        Map result = new HashMap<String, Object>();
+        try (Connection conn = DriverManager.getConnection("jdbc:mariadb://team2.cqwr50ybrtaw.ap-northeast-2.rds.amazonaws.com/", "team2", "team2!!!!")) {
+            // create a Statement
+            try (Statement stmt = conn.createStatement()) {
+                //execute query
+                try (ResultSet rs = stmt.executeQuery("USE team2")) {
+                    String SQL = "select *\n" +
+                            "from kosdaq_info\n" +
+                            ";";
+                    ResultSet kosdaqQuery = stmt.executeQuery(SQL); // 삼성전자 가격 조회
+                    while(kosdaqQuery.next()){
+                        result.put("kosdaq_start", kosdaqQuery.getString(1));
+                        result.put("kosdaq_end", kosdaqQuery.getString(1));
+                        result.put("kosdaq_min", kosdaqQuery.getString(1));
+                        result.put("kosdaq_max", kosdaqQuery.getString(1));
+                    }
+                } catch(Exception e){
+                    System.out.println(e);
+                }
+            } catch(Exception e){
+                System.out.println(e);
+            }
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
 }
