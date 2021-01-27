@@ -86,8 +86,8 @@ public class MariaController {
                     ResultSet queryResult = stmt.executeQuery(SQL);
                     while(queryResult.next()){
                         Map result = new HashMap<String, Object>();
-                        result.put("company_name", queryResult.getString(1));
-                        result.put("company_id", queryResult.getString(2));
+                        result.put("company_id", queryResult.getString(1));
+                        result.put("company_name", queryResult.getString(2));
                         list.add(result);
                     }
                 } catch(Exception e){
