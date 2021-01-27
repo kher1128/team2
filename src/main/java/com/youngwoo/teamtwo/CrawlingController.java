@@ -45,6 +45,8 @@ public class CrawlingController {
             title = title.replace("<b>", "");
             title = title.replace("</b>", "");
             title = title.replace("&quot", "");
+            title = title.replace("&nbsp", "");
+            title = title.replace("&amp", "");
             title = title.replace(";", "");
             result.put("title", title);
             list.add(result);
